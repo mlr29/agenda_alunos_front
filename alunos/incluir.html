@@ -38,9 +38,67 @@
         }
         
     </style>
+    <link rel="shortcut icon" href="./assets/src/icon.png" type="image/x-icon">
+    <style>
+        body {
+            background: url('/assets/src/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-label {
+            color: #000;
+            font-weight: 500;
+        }
+        .form-control {
+            background: rgb(226, 226, 226);
+            border: none;
+            border-radius: 5px;
+        }
+        
+    </style>
 </head>
 
 <body>
+    <div class="form-container">
+        <h2 class="text-center mb-4">Incluir Aluno</h2>
+        <form id="aluno-form-incluir">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" name="nome" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
+                <input type="date" name="data_nascimento" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone:</label>
+                <input type="tel" name="telefone" class="form-control">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success mb-1">Incluir</button>
+            </div>
+        </form>
+        <a href="../index.html" class="container-fluid btn btn-outline-dark py-10">Voltar</a>
+    </div>
+
     <div class="form-container">
         <h2 class="text-center mb-4">Incluir Aluno</h2>
         <form id="aluno-form-incluir">

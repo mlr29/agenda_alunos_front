@@ -48,6 +48,42 @@
         <h2 class="text-center mb-4">Incluir Agenda</h2>
         <form id="agenda-form-incluir">
             <input type="hidden" name="aluno_id" value="" required>
+    <div class="form-container">
+        <h2 class="text-center mb-4">Incluir Agenda</h2>
+        <form id="agenda-form-incluir">
+            <input type="hidden" name="aluno_id" value="" required>
+
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Aluno</label>
+                <input type="text" name="nome" class="form-control" readonly disabled required>
+            </div>
+
+            <div class="mb-3">
+                <label for="data" class="form-label">Data:</label>
+                <input type="date" name="data" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="hora" class="form-label">Hora:</label>
+                <input type="time" name="hora" class="form-control" required>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <label for="descricao" class="form-label">Descrição:</label>
+                <textarea name="descricao" class="form-textarea" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="local" class="form-label">Local:</label>
+                <input type="text" name="local" class="form-control" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success mb-1">Incluir</button>
+            </div>
+        </form>
+        <a href="../index.html" class="container-fluid btn btn-outline-dark py-10">Voltar</a>
+    </div>
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Aluno</label>
