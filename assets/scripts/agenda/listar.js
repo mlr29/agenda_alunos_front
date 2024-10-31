@@ -1,7 +1,7 @@
 import { ENDPOINTS, VIEW_PATHS } from '../../scripts/config.js';
 import {eventoDeletar} from './excluir.js'
 //-------------------------------------------
-//./agenda/listar_excluir.html
+//./agenda/listar.html
 //Rota GET /api/agenda/list - Listar agendas
 //-------------------------------------------
 
@@ -18,7 +18,8 @@ document.getElementById('pesquisa-button').addEventListener('click', async () =>
 
 //retorna true se determinada sequência de caracteres aparece no array
 function substringExists(array, substring) {
-    for (element of array) {
+    for (const element of array) {
+        console.log(String(element))
         if (String(element).includes(substring)) {
             return true;
         }
@@ -55,29 +56,37 @@ function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
 
     
     
-    const tdLink = document.createElement('td');
-    
-    const linkDeletar = document.createElement('button');
+    const tdAcoes = document.createElement('td');
+
+    const divAcoes = document.createElement('div');
+    divAcoes.classList.value = 'btn-group';
+
+    const buttonDeletar = document.createElement('button');
     let nomeId = `deletar-button-${id}`;
-    linkDeletar.setAttribute('id', nomeId);
-    linkDeletar.classList.add("deletar-button");
-    linkDeletar.textContent = 'Deletar Agenda';
-    linkDeletar.addEventListener('click', () => eventoDeletar(linkDeletar));
-    tdLink.appendChild(linkDeletar);
+    buttonDeletar.setAttribute('id', nomeId);
+    buttonDeletar.classList.add("deletar-button");
+    buttonDeletar.textContent = 'Deletar Agenda';
+    buttonDeletar.addEventListener('click', () => eventoDeletar(buttonDeletar));
+    buttonDeletar.classList.value +=' btn btn-sm btn-danger'; //Estilo bootstrap
+    divAcoes.appendChild(buttonDeletar);
     
     
-    const linkAtualizar = document.createElement('button');
+    const buttonAtualizar = document.createElement('button');
     nomeId = `atualizar-button-${id}`;  
-    linkAtualizar.setAttribute('id', nomeId);
-    linkAtualizar.addEventListener('click', () => {window.location.href=`${VIEW_PATHS.AGENDA.ATUALIZAR}?agenda_id=${id}`});
-    linkAtualizar.classList.add("atualizar-button");
-    linkAtualizar.target = '_blank';
-    linkAtualizar.textContent = 'Atualizar Agenda';
-    tdLink.appendChild(linkAtualizar);
+    buttonAtualizar.setAttribute('id', nomeId);
+    buttonAtualizar.addEventListener('click', () => {window.location.href=`${VIEW_PATHS.AGENDA.ATUALIZAR}?agenda_id=${id}`});
+    buttonAtualizar.classList.add("atualizar-button");
+    buttonAtualizar.target = '_blank';
+    buttonAtualizar.textContent = 'Atualizar Agenda';
+    buttonAtualizar.classList.value += ' btn btn-sm btn-primary';
+    divAcoes.appendChild(buttonAtualizar);
     
-    tr.appendChild(tdLink);
+    tdAcoes.appendChild(divAcoes);
+
+    tr.appendChild(tdAcoes);
     
-    table.appendChild(tr);
+    const tbodyElement = table.querySelector('tbody');
+    tbodyElement.appendChild(tr);
 }
 
 async function carregarAgenda() {
@@ -115,7 +124,8 @@ try {
     for (const agenda of result) {
 
         if (key !== null && key !== undefined) {
-            const lineArray = [agenda.id, agenda.nome, agenda.data_nascimento, agenda.email, agenda.telefone]
+            const lineArray = [agenda.id, agenda.aluno_id, agenda.data, agenda.hora, agenda.descricao, agenda.local]
+            
             if (substringExists(lineArray, key)) {
                 criaRegistroAgenda(table, agenda.id, agenda.aluno_id, agenda.data, agenda.hora, agenda.descricao, agenda.local);
             }

@@ -22,7 +22,7 @@ pesquisarButton.addEventListener('click', async () => {
 
 //retorna true se determinada sequência de caracteres aparece no array
 function substringExists(array, substring) {
-    for (element of array) {
+    for (const element of array) {  
         if (String(element).includes(substring)) {
             return true;
         }
@@ -54,27 +54,37 @@ function criaRegistroAluno(table, id, nome, dtnascimento, email, telefone) {
     tr.appendChild(tdTelefone);
 
     const tdAcoes = document.createElement('td');
+
+    const divAcoes = document.createElement('div');
+    divAcoes.classList.value = 'btn-group';
+
     const criarAgendaButton = document.createElement('button');
     criarAgendaButton.addEventListener('click', () => {window.location.href= `${VIEW_PATHS.AGENDA.INCLUIR}?aluno_id=${id}`});
+    criarAgendaButton.classList.value ='btn btn-sm btn-info';
     criarAgendaButton.textContent = 'Criar Agenda';
     criarAgendaButton.target = '_blank';
-    tdAcoes.appendChild(criarAgendaButton);
+    divAcoes.appendChild(criarAgendaButton);
    
     const atualizarAlunoButton = document.createElement('button');
     atualizarAlunoButton.addEventListener('click', () => {window.location.href= `${VIEW_PATHS.ALUNOS.ATUALIZAR}?aluno_id=${id}`});
     atualizarAlunoButton.textContent = 'Atualizar Aluno';
-    tdAcoes.appendChild(atualizarAlunoButton);
+    atualizarAlunoButton.classList.value ='btn btn-sm btn-warning';
+    divAcoes.appendChild(atualizarAlunoButton);
 
     const deletarAlunoButton = document.createElement('button');
     deletarAlunoButton.textContent = 'Deletar Aluno';
     const nomeId = `deletar-button-${id}`;  
     deletarAlunoButton.setAttribute('id', nomeId);
     deletarAlunoButton.addEventListener('click', () => eventoDeletar(deletarAlunoButton));
-    tdAcoes.appendChild(deletarAlunoButton);
-   
+    deletarAlunoButton.classList.value ='btn btn-sm btn-danger';
+    divAcoes.appendChild(deletarAlunoButton);
+    
+    tdAcoes.appendChild(divAcoes);
+
     tr.appendChild(tdAcoes);
 
-    table.appendChild(tr);
+    const tbodyElement = table.querySelector('tbody');
+    tbodyElement.appendChild(tr);
 }
 
 async function carregarAlunos() {
@@ -110,10 +120,11 @@ async function carregarAlunosPorChave(key) {
         }
 
         for (const aluno of result) {
-
+            
             if (key !== null && key !== undefined) {
                 const lineArray = [aluno.id, aluno.nome, aluno.data_nascimento, aluno.email, aluno.telefone]
                 if (substringExists(lineArray, key)) {
+                    console.log(lineArray)
                     criaRegistroAluno(table, aluno.id, aluno.nome, aluno.data_nascimento, aluno.email, aluno.telefone);
                 }
             }

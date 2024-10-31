@@ -1,5 +1,5 @@
 const API_BASE_URL = "http://localhost:3000/api";
-const VIEW_PATH_BASE_URL = "http://localhost:5500/views";
+const VIEW_PATH_BASE_URL = "http://localhost:5500";
 
 export const ENDPOINTS = {
     ALUNOS: `${API_BASE_URL}/alunos`,
