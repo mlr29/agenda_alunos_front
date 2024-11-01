@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://localhost:3000/api";
-const VIEW_PATH_BASE_URL = "http://localhost:5500";
+const API_BASE_URL = "https://crud-ktletan9x-savio-mendes-s-projects.vercel.app/api";
+const VIEW_PATH_BASE_URL = window.location.origin;
 
 export const ENDPOINTS = {
     ALUNOS: `${API_BASE_URL}/alunos`,
