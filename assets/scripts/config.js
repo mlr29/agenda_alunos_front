@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://crud-ktletan9x-savio-mendes-s-projects.vercel.app/api";
+const API_BASE_URL = "https://crud-bd-git-main-savio-mendes-s-projects.vercel.app/api";
 const VIEW_PATH_BASE_URL = window.location.origin;
 
 export const ENDPOINTS = {
