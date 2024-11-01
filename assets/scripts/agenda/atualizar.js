@@ -21,13 +21,11 @@ updateFormReference.querySelector('input[name="nome"]').value = alunoResult.nome
 
 updateFormReference.addEventListener('submit', async (event) => {
         event.preventDefault(); // Evita o envio padrão do formulário
-
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData);
-        const id = data.id;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/agenda/${id}`, {
+            const response = await fetch(`http://localhost:3000/api/agenda/${agenda_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
