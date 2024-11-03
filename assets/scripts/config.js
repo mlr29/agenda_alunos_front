@@ -1,5 +1,6 @@
 const API_BASE_URL = "https://crud-bd-git-main-savio-mendes-s-projects.vercel.app/api";
-const VIEW_PATH_BASE_URL = window.location.origin;
+const originPath = window.location.origin;
+const VIEW_PATH_BASE_URL = originPath === "http://127.0.0.1:5500" ? originPath : `${originPath}/agenda_alunos_front`;
 
 export const ENDPOINTS = {
     ALUNOS: `${API_BASE_URL}/alunos`,
