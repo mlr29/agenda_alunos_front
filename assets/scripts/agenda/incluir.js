@@ -1,4 +1,5 @@
 import { ENDPOINTS } from '../../scripts/config.js';
+import { buildModal, modalActivate } from '../modalBuild.js';
 
 //-------------------------------------------
 //./agenda/incluir.html
@@ -23,7 +24,8 @@ saveFormReference.addEventListener('submit', async (event) => {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     
-    let resultMessage = ""
+    let titleMessage = "";
+    let bodyMessage = "";
 
     try {
         const response = await fetch(`${ENDPOINTS.AGENDA}/`, {
@@ -38,11 +40,18 @@ saveFormReference.addEventListener('submit', async (event) => {
         console.log(result);
         if (result.error) throw new Error(result.error)
 
-        resultMessage = `Registro inserido com sucesso: \n${JSON.stringify(result).replaceAll(',', ',\n')}`
+        titleMessage = 'Registro inserido com sucesso';
+        bodyMessage = `<div>ID: ${result.id}</div>
+                        <div>Aluno ID: ${result.aluno_id}</div>
+                        <div>Data: ${result.data}</div>
+                        <div>Hora: ${result.hora}</div>
+                        <div>Descrição: ${result.descricao}</div>
+                        <div>Local: ${result.local}</div>`;
+        buildModal(1,titleMessage, bodyMessage)
+        modalActivate(null);
     } catch (error) {
         console.error('Erro ao enviar o formulário:', error);
-        resultMessage = `Registro não inserido: ${error.message}`
-    } finally {
-        window.alert(resultMessage);
-    }
+        buildModal(1,titleMessage, bodyMessage);
+        modalActivate(null);
+    } 
 });

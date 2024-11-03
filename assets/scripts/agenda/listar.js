@@ -1,5 +1,5 @@
 import { ENDPOINTS, VIEW_PATHS } from '../../scripts/config.js';
-import {eventoDeletar} from './excluir.js'
+import {eventDelete} from './excluir.js'
 //-------------------------------------------
 //./agenda/listar.html
 //Rota GET /api/agenda/list - Listar agendas
@@ -66,7 +66,7 @@ function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
     buttonDeletar.setAttribute('id', nomeId);
     buttonDeletar.classList.add("deletar-button");
     buttonDeletar.textContent = 'Deletar Agenda';
-    buttonDeletar.addEventListener('click', () => eventoDeletar(buttonDeletar));
+    buttonDeletar.addEventListener('click', () => eventDelete(buttonDeletar));
     buttonDeletar.classList.value +=' btn btn-sm btn-danger'; //Estilo bootstrap
     divAcoes.appendChild(buttonDeletar);
     

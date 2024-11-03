@@ -1,5 +1,5 @@
 import { ENDPOINTS, VIEW_PATHS } from "../config.js";
-import { eventoDeletar } from "./excluir.js";
+import { eventDelete } from "./excluir.js";
 //-------------------------------------------
 //./alunos/listarAluno.html
 //Rota GET /api/alunos/list - Listar alunos
@@ -75,7 +75,7 @@ function criaRegistroAluno(table, id, nome, dtnascimento, email, telefone) {
     deletarAlunoButton.textContent = 'Deletar Aluno';
     const nomeId = `deletar-button-${id}`;  
     deletarAlunoButton.setAttribute('id', nomeId);
-    deletarAlunoButton.addEventListener('click', () => eventoDeletar(deletarAlunoButton));
+    deletarAlunoButton.addEventListener('click', () => eventDelete(deletarAlunoButton));
     deletarAlunoButton.classList.value ='btn btn-sm btn-danger';
     divAcoes.appendChild(deletarAlunoButton);
     
