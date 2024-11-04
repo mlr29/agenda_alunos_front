@@ -1,10 +1,11 @@
 import { ENDPOINTS } from "../config.js";
+import { buildModal, modalActivate } from "../modalBuild.js";
 
 //-------------------------------------------
 //./agenda_aluno/excluirAluno.html
 //Rota DELETE /api/agenda/:id - Excluir agenda
 //-------------------------------------------
-export async function eventoDeletar(element){
+export async function eventDelete(element){
     const id = element.id.replace('deletar-button-','');
 
     try {
@@ -15,16 +16,14 @@ export async function eventoDeletar(element){
             }
         });
 
-        if (response.status === 204) {
-            window.alert('Registro deletado com sucesso');
-            window.location.reload();
-        } else {
-            const result = await response.json();
-            window.alert(`${result.message}`);
-        }
+        if(!(response.status === 204)) return new Error([response])
+
+        buildModal(1,'Registro deletado com sucesso','');
+        modalActivate(element.id);
 
     } catch (error) {
-        console.error('Erro ao enviar o formulário:', error);
+        buildModal(element.id, 'Erro ao deletar formulário:', error.message);
+        modalActivate(element.id);
     }
 }
 

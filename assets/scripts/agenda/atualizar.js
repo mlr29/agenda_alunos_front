@@ -1,4 +1,5 @@
 import { ENDPOINTS } from '../../scripts/config.js';
+import { buildModal, modalActivate } from '../modalBuild.js';
 
 //-------------------------------------------
 //./agenda/atualizar.html
@@ -33,23 +34,33 @@ updateFormReference.addEventListener('submit', async (event) => {
                 body: JSON.stringify(data),
             });
 
-            const result = await response.json();
-
-            if (response.ok) {
-                window.alert(`Registro atualizado com sucesso: \n${JSON.stringify(result).replaceAll(',', ',\n')}`);
-                window.history.back(); // Isso retorna para a página anterior no histórico
-            } else {
-                switch (result.message) {
-                    case 'Erro ao atualizar agenda':
-                        window.alert(`${result.message}\n${result.error}`);
-                        break;
-                    case "Agenda não encontrado":
-                        window.alert(`${result.message}`);
-                        break;
-                }
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Erro desconhecido");
             }
+    
+            const result = await response.json();
+            
+            const titleMessage = 'Registro atualizado com sucesso';
+            const bodyMessage = `<div>ID: ${result.id}</div>
+                        <div>Aluno ID: ${result.aluno_id}</div>
+                        <div>Data: ${result.data}</div>
+                        <div>Hora: ${result.hora}</div>
+                        <div>Descrição: ${result.descricao}</div>
+                        <div>Local: ${result.local}</div>`;
 
+            buildModal(1,titleMessage, bodyMessage);
+            modalActivate(null);
         } catch (error) {
-            console.error('Erro ao enviar o formulário:', error);
+            switch (error.message) {
+                case "Agenda não encontrada":
+                    buildModal(1,error.message, "ID da Agenda não existe");
+                    modalActivate(null);
+                    break;
+                default:
+                    buildModal(1, "Agenda não atualizada", error.message);
+                    modalActivate(null);
+                    break;
+            }
         }
     })
