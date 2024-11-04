@@ -43,13 +43,13 @@ Para estilização foram utilizados classes e o modal do Bootstrap.
 
 #### Atualizar aluno 
 
-```http
+```https
   PUT api/alunos/
 ```
 
 #### Deletar aluno 
 
-```http
+```https
   DELETE api/alunos/${id}
 ```
 | Parameter | Type     | Description                       |
