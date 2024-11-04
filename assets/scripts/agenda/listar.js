@@ -1,5 +1,5 @@
 import { ENDPOINTS, VIEW_PATHS } from '../../scripts/config.js';
-import {eventoDeletar} from './excluir.js'
+import { eventoDeletar } from './excluir.js'
 //-------------------------------------------
 //./agenda/listar.html
 //Rota GET /api/agenda/list - Listar agendas
@@ -27,7 +27,7 @@ function substringExists(array, substring) {
     return false;
 }
 
-function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
+function criaRegistroAgenda(table, id, aluno_id, data, descricao, local) {
     const tr = document.createElement('tr');
 
     const tdId = document.createElement('td');
@@ -42,10 +42,6 @@ function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
     tdData.textContent = data;
     tr.appendChild(tdData);
 
-    const tdHora = document.createElement('td');
-    tdHora.textContent = hora;
-    tr.appendChild(tdHora);
-
     const tdDescricao = document.createElement('td');
     tdDescricao.textContent = descricao;
     tr.appendChild(tdDescricao);
@@ -54,8 +50,8 @@ function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
     tdLocal.textContent = local;
     tr.appendChild(tdLocal);
 
-    
-    
+
+
     const tdAcoes = document.createElement('td');
 
     const divAcoes = document.createElement('div');
@@ -67,72 +63,72 @@ function criaRegistroAgenda(table, id, aluno_id, data, hora, descricao, local) {
     buttonDeletar.classList.add("deletar-button");
     buttonDeletar.textContent = 'Deletar Agenda';
     buttonDeletar.addEventListener('click', () => eventoDeletar(buttonDeletar));
-    buttonDeletar.classList.value +=' btn btn-sm btn-danger'; //Estilo bootstrap
+    buttonDeletar.classList.value += ' btn btn-sm btn-danger'; //Estilo bootstrap
     divAcoes.appendChild(buttonDeletar);
-    
-    
+
+
     const buttonAtualizar = document.createElement('button');
-    nomeId = `atualizar-button-${id}`;  
+    nomeId = `atualizar-button-${id}`;
     buttonAtualizar.setAttribute('id', nomeId);
-    buttonAtualizar.addEventListener('click', () => {window.location.href=`${VIEW_PATHS.AGENDA.ATUALIZAR}?agenda_id=${id}`});
+    buttonAtualizar.addEventListener('click', () => { window.location.href = `${VIEW_PATHS.AGENDA.ATUALIZAR}?agenda_id=${id}` });
     buttonAtualizar.classList.add("atualizar-button");
     buttonAtualizar.target = '_blank';
     buttonAtualizar.textContent = 'Atualizar Agenda';
     buttonAtualizar.classList.value += ' btn btn-sm btn-primary';
     divAcoes.appendChild(buttonAtualizar);
-    
+
     tdAcoes.appendChild(divAcoes);
 
     tr.appendChild(tdAcoes);
-    
+
     const tbodyElement = table.querySelector('tbody');
     tbodyElement.appendChild(tr);
 }
 
 async function carregarAgenda() {
-try {
-    const response = await fetch(`${ENDPOINTS.AGENDA}/list`);
-    if (!response.ok) {
-        throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+    try {
+        const response = await fetch(`${ENDPOINTS.AGENDA}/list`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        const table = document.getElementById('tabela-agenda');
+
+        for (const agenda of result) {
+            criaRegistroAgenda(table, agenda.id, agenda.aluno_id, agenda.data, agenda.descricao, agenda.local);
+        }
+
+    } catch (error) {
+        console.error('Erro ao enviar a requisição:', error);
     }
-
-    const result = await response.json();
-    const table = document.getElementById('tabela-agenda');
-
-    for (const agenda of result) {
-        criaRegistroAgenda(table, agenda.id, agenda.aluno_id, agenda.data, agenda.hora, agenda.descricao, agenda.local);
-    }
-
-} catch (error) {
-    console.error('Erro ao enviar a requisição:', error);
-}
 }
 
 async function carregarAgendaPorChave(key) {
-try {
-    const response = await fetch(`${ENDPOINTS.AGENDA}/list`);
-    if (!response.ok) {
-        throw new Error(`Erro ao buscar dados: ${response.statusText}`);
-    }
+    try {
+        const response = await fetch(`${ENDPOINTS.AGENDA}/list`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+        }
 
-    const result = await response.json();
-    const table = document.getElementById('tabela-agenda');
-    while (table.rows.length > 1) { // Mantém o cabeçalho (primeira linha)
-        table.deleteRow(1); // Remove a primeira linha após o cabeçalho
-    }
+        const result = await response.json();
+        const table = document.getElementById('tabela-agenda');
+        while (table.rows.length > 1) { // Mantém o cabeçalho (primeira linha)
+            table.deleteRow(1); // Remove a primeira linha após o cabeçalho
+        }
 
-    for (const agenda of result) {
+        for (const agenda of result) {
 
-        if (key !== null && key !== undefined) {
-            const lineArray = [agenda.id, agenda.aluno_id, agenda.data, agenda.hora, agenda.descricao, agenda.local]
-            
-            if (substringExists(lineArray, key)) {
-                criaRegistroAgenda(table, agenda.id, agenda.aluno_id, agenda.data, agenda.hora, agenda.descricao, agenda.local);
+            if (key !== null && key !== undefined) {
+                const lineArray = [agenda.id, agenda.aluno_id, agenda.data, agenda.descricao, agenda.local]
+
+                if (substringExists(lineArray, key)) {
+                    criaRegistroAgenda(table, agenda.id, agenda.aluno_id, agenda.data, agenda.descricao, agenda.local);
+                }
             }
         }
+    } catch (error) {
+        console.error('Erro ao enviar a requisição:', error);
     }
-} catch (error) {
-    console.error('Erro ao enviar a requisição:', error);
-}
 }
 
