@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '../../scripts/config.js';
+import { ENDPOINTS } from '../config.js';
 import { buildModal, modalActivate } from '../modalBuild.js';
 
 //-------------------------------------------
@@ -23,7 +23,6 @@ saveFormReference.addEventListener('submit', async (event) => {
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    
     let titleMessage = "";
     let bodyMessage = "";
 
@@ -44,7 +43,6 @@ saveFormReference.addEventListener('submit', async (event) => {
         bodyMessage = `<div>ID: ${result.id}</div>
                         <div>Aluno ID: ${result.aluno_id}</div>
                         <div>Data: ${result.data}</div>
-                        <div>Hora: ${result.hora}</div>
                         <div>Descrição: ${result.descricao}</div>
                         <div>Local: ${result.local}</div>`;
         buildModal(1,titleMessage, bodyMessage)

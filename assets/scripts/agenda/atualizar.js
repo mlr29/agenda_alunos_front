@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '../../scripts/config.js';
+import { ENDPOINTS } from '../config.js';
 import { buildModal, modalActivate } from '../modalBuild.js';
 
 //-------------------------------------------
@@ -26,7 +26,7 @@ updateFormReference.addEventListener('submit', async (event) => {
         const data = Object.fromEntries(formData);
 
         try {
-            const response = await fetch(`http://localhost:3000/api/agenda/${agenda_id}`, {
+            const response = await fetch(`${ENDPOINTS.AGENDA}/${agenda_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,6 @@ updateFormReference.addEventListener('submit', async (event) => {
             const bodyMessage = `<div>ID: ${result.id}</div>
                         <div>Aluno ID: ${result.aluno_id}</div>
                         <div>Data: ${result.data}</div>
-                        <div>Hora: ${result.hora}</div>
                         <div>Descrição: ${result.descricao}</div>
                         <div>Local: ${result.local}</div>`;
 
